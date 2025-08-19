@@ -5,17 +5,19 @@
 </head>
 <body>
     <h1>You are calling me from {{request.remote_addr}}</h1>
-    <form method="POST" action="/add">
-    <input name="yourname" placeholder="Yourname" required />
-    <input name="message" placeholder="Message" required />
-    <button type="submit">Add Comment</button>
+  <form method="POST" action="/add">
+    <input name="ip" placeholder="Router IP" required />
+    <input name="user" placeholder="User" required />
+    <input name="password" placeholder="password" required />
+    <button type="submit">Add Router</button>
   </form>
 
   <ul>
-    {% for comment in data %}
+    {% for it in items %}
       <li>
-	       {{ comment.yourname }} - {{ comment.message }}
-	<form method="POST" action="{{ url_for('delete_comment', idx=loop.index0) }}" style="display:inline">
+	       {{ it.ip }} - {{ it.user }} - {{ it.password }}
+	<form method="POST" action="/delete" style="display:inline">
+          <input type="hidden" name="id" value="{{ it._id }}" />
       		<button type="submit">Delete</button>
 	</form>
 

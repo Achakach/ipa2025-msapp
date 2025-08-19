@@ -1,22 +1,21 @@
 #!/bin/bash
 
-mkdir tempdir
-mkdir tempdir/templates
-mkdir tempdir/static
 
-cp sample_app.py tempdir/.
-cp -r templates/* tempdir/templates/.
-cp -r static/* tempdir/static/.
-
-echo "FROM python" > tempdir/Dockerfile
-echo "RUN pip install flask" >> tempdir/Dockerfile
-echo "COPY ./static /home/myapp/static/" >> tempdir/Dockerfile
-echo "COPY ./templates /home/myapp/templates/" >> tempdir/Dockerfile
-echo "COPY sample_app.py /home/myapp/" >> tempdir/Dockerfile
-echo "EXPOSE 8080" >> /tempdir/Dockerfile
-echo "CMD python3 /home/myapp/sample_app.py" >> tempdir/Dockerfile
+echo "FROM python" > Dockerfile
+echo "WORKDIR /home/myapp" >> Dockerfile
+echo "RUN pip install flask" >> Dockerfile
+echo "RUN pip install pymongo" >> Dockerfile
+echo "COPY ./static /home/myapp/static/" >> Dockerfile
+echo "COPY ./templates /home/myapp/templates/" >> Dockerfile
+echo "COPY sample_app.py /home/myapp/" >> Dockerfile
+echo "EXPOSE 8080" >> Dockerfile
+echo "CMD python3 /home/myapp/sample_app.py" >> Dockerfile
 
 cd tempdir
+docker network create app-net
 docker build -t web .
-docker run -t -d -p 8080:8080 --name web web 
+docker run -d -p 27017:27017 --network app-net -v mongo-data:/data/db --name mongo mongo:6
+docker run -d -p 8080:8080 --network app-net --name web web
+
+docker ps -a
 
