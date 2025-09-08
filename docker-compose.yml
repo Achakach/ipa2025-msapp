@@ -34,7 +34,7 @@ services:
     env_file:
       - .env
 
-  schduler:
+  scheduler:
     build: ./scheduler
     depends_on:
       - mongo
@@ -52,7 +52,7 @@ services:
     depends_on:
       - mongo
       - rabbitmq
-      - schduler
+      - scheduler
     networks:
       - app-net
     env_file:
