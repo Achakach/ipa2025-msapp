@@ -3,6 +3,7 @@ import ntc_templates
 import os
 import json
 
+
 def get_interfaces(ip, username, password):
     os.environ["NET_TEXTFSM"] = os.path.join(
         os.path.dirname(ntc_templates.__file__), "templates"
