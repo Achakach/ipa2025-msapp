@@ -15,7 +15,7 @@
   <ul>
     {% for it in items %}
       <li>
-	       {{ it.ip }} - {{ it.user }} - {{ it.password }}
+	       <a href="/router/{{ it.ip }}">{{ it.ip }}</a> - {{ it.user }} - {{ it.password }}
 	<form method="POST" action="/delete" style="display:inline">
           <input type="hidden" name="id" value="{{ it._id }}" />
       		<button type="submit">Delete</button>
